@@ -49,7 +49,7 @@ class MealRestControllerTest extends AbstractControllerTest {
     @Test
     void testCreate() throws Exception {
         Meal expected = new Meal(of(2018, Month.SEPTEMBER, 4, 12, 45), "Созданный Обед", 800);
-        ResultActions action = mockMvc.perform(post(REST_URL)
+        ResultActions action = mockMvc.perform(post(REST_URL + "create")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(expected)))
                 .andExpect(status().isCreated());
@@ -64,7 +64,7 @@ class MealRestControllerTest extends AbstractControllerTest {
         Meal updated = new Meal(MEAL1_ID, of(2015, Month.MAY, 30, 10, 0), "Завтрак", 500);
         updated.setDescription("Измененный завтрак");
         updated.setCalories(700);
-        mockMvc.perform(put(REST_URL + MEAL1_ID)
+        mockMvc.perform(put(REST_URL + "update/" + MEAL1_ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(updated)))
                 .andExpect(status().isOk());
@@ -73,7 +73,9 @@ class MealRestControllerTest extends AbstractControllerTest {
 
     @Test
     void testGetBetween() throws Exception {
-        mockMvc.perform(get(REST_URL + "between?startDateTime=" + "2015-05-30T10:00:00" + "&endDateTime=" + "2015-05-30T21:00:00"))
+        mockMvc.perform(post(REST_URL + "filter?startDate=" + "2015-05-30" + "&endDate=" + "2015-05-30"
+                + "&startTime=" + "" + "&endTime=" + ""))
+                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(contentJson(MEAL1, MEAL2, MEAL3));
