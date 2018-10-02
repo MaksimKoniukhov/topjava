@@ -16,7 +16,7 @@
 
         <div class="card">
             <div class="card-body pb-0">
-                <form method="post" action="meals/filter">
+                <form id="filter">
                     <div class="row">
                         <div class="offset-1 col-2">
                             <label ><spring:message code="meal.startDate"/></label>
@@ -35,14 +35,17 @@
                             <input type="time" class="form-control" name="endTime" value="${param.endTime}">
                         </div>
                     </div>
-                    <br/>
-                    <div class="card-footer text-right">
-                        <button class="btn btn-primary" type="submit">
-                            <span class="fa fa-filter"></span><spring:message code="meal.filter"/>
-                        </button>
-                    </div>
                 </form>
             </div>
+                <div class="card-footer text-right">
+                    <button class="btn btn-danger" onclick="clearFilter()">
+                        <span class="fa fa-remove"></span><spring:message code="common.cancel"/>
+                    </button>
+                    <button class="btn btn-primary" onclick="updateTable()">
+                        <span class="fa fa-filter"></span><spring:message code="meal.filter"/>
+                    </button>
+
+                </div>
         </div>
 
         <br>

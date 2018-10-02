@@ -28,9 +28,23 @@ $(function () {
         "order": [
             [
                 0,
-                "asc"
+                "desc"
             ]
         ]
     });
     makeEditable();
 });
+
+function updateTable() {
+    $.ajax({
+        type: "GET",
+        url: ajaxUrl + "filter",
+        data: $("#filter").serialize(),
+        success: updateTableByData
+    });
+}
+
+function clearFilter() {
+    $("#filter")[0].reset();
+    updateTable();
+}
